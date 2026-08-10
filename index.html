@@ -265,7 +265,7 @@
   .week-card:hover .glow{opacity:1;}
   .week-num{font-family:'Fraunces',serif;font-size:18px;font-weight:600;color:var(--ink);position:relative;z-index:1;}
   .week-dot{width:8px;height:8px;border-radius:50%;background:var(--clay);flex-shrink:0;position:relative;z-index:1;}
- 
+
   /* week card expand chevron + active state */
   .week-card{width:100%;justify-content:space-between;}
   .week-card .week-left{display:flex;align-items:center;gap:14px;}
@@ -279,7 +279,7 @@
   .week-card.expanded .week-chevron{background:var(--clay);border-color:var(--clay);}
   .week-card.expanded .week-chevron svg{stroke:#fff;transform:rotate(180deg);}
   .week-card.no-content{cursor:default;}
- 
+
   /* accordion detail panel */
   .week-detail{
     max-height:0;overflow:hidden;opacity:0;
@@ -302,6 +302,9 @@
   .week-detail.open .wd-card:nth-child(3){transition-delay:.19s;}
   .week-detail.open .wd-card:nth-child(4){transition-delay:.26s;}
   .week-detail.open .wd-card:nth-child(5){transition-delay:.33s;}
+  .week-detail.open .wd-card:nth-child(6){transition-delay:.40s;}
+  .week-detail.open .wd-card:nth-child(7){transition-delay:.47s;}
+  .week-detail.open .wd-card:nth-child(8){transition-delay:.54s;}
   .wd-label{
     font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;
     color:var(--clay);font-weight:600;margin-bottom:10px;display:block;
@@ -309,14 +312,14 @@
   .wd-card h3{font-size:19px;margin-bottom:12px;}
   .wd-card p{color:var(--ink-soft);font-size:14.5px;}
   .wd-card p + p{margin-top:12px;}
- 
+
   .wd-media{
     width:100%;border-radius:14px;overflow:hidden;border:1px solid var(--line);
     margin-bottom:20px;background:var(--cream-deep);
   }
   .wd-media img{width:100%;display:block;transition:transform .5s cubic-bezier(.2,.8,.2,1);}
   .wd-media:hover img{transform:scale(1.04);}
- 
+
   .wd-type{
     display:inline-flex;align-items:center;gap:8px;font-family:'Fraunces',serif;font-size:17px;font-weight:600;
     color:var(--clay-2);background:var(--clay-soft);border:1px solid var(--clay-soft-2);
@@ -338,7 +341,7 @@
     transition:width 1.3s cubic-bezier(.2,.8,.2,1);
   }
   .week-detail.open .wd-bar-fill{width:var(--pct);}
- 
+
   .wd-learn-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
   .wd-learn-card{
     background:var(--card-warm);border:1px solid var(--line);border-radius:12px;padding:20px;
@@ -349,7 +352,7 @@
   .wd-learn-card .wd-icon{font-size:20px;margin-bottom:10px;display:block;}
   .wd-learn-card h4{font-size:14.5px;margin-bottom:6px;}
   .wd-learn-card p{font-size:13px;color:var(--ink-soft);}
- 
+
   /* ---------- EXPERIENCE ---------- */
   .exp-card{
     background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
@@ -376,7 +379,7 @@
   }
   .edu-card h3{font-size:18px;margin-bottom:6px;}
    .lead{margin-bottom: 30px;}
-
+ 
   /* ---------- CERTIFICATE ---------- */
   .cert-card{
     margin-top:28px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
@@ -398,7 +401,7 @@
   .cert-media:hover img{transform:scale(1.02);}
   .cert-footer{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;margin-top:22px;}
   .cert-footer p{color:var(--ink-soft);font-size:13.5px;}
-
+ 
   /* ---------- BEYOND CODE ---------- */
   .beyond-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
   .beyond-card{
@@ -757,7 +760,7 @@
       <div class="beyond-card reveal">
         <span class="icon">🧩</span>
         <h4>Problem Solving</h4>
-        <p>Real-world problems, worked backward from the user actual pain point.</p>
+        <p>Real-world problems, worked backward from the user's actual pain point.</p>
       </div>
     </div>
  
@@ -812,7 +815,7 @@
     Designed and developed with passion.
   </div>
 </footer>
- 
+
 <script>
   // ---------- Week detail content (only weeks with data render an accordion) ----------
   const weekContent = {
@@ -822,7 +825,7 @@
         <h3>Week 0 – Self Discovery &amp; Reflection</h3>
         <p>The first week of ProtoSem focused on understanding myself before beginning the innovation journey. Through self-assessment activities, personality evaluation, and reflective learning, I explored my strengths, communication style, learning preferences, and personal values. These activities laid a strong foundation for teamwork, innovation, and personal growth.</p>
       </div>
- 
+
       <div class="wd-card">
         <span class="wd-label">16Personalities Assessment</span>
         <div class="wd-media"><img src="16personalities.png" alt="16Personalities assessment wheel"></div>
@@ -844,16 +847,16 @@
           <div class="wd-bar-row"><div class="wd-bar-top"><span>Learning Ability</span><span class="pct">92%</span></div><div class="wd-bar-track"><div class="wd-bar-fill" style="--pct:92%"></div></div></div>
         </div>
       </div>
- 
+
       <div class="wd-card">
         <span class="wd-label">Zen Pencils Reflection</span>
         <div class="wd-media"><img src="zen-pencils.jpg" alt="Zen Pencils book cover"></div>
         <h3 style="font-size:17px;">Zen Pencils Story #124</h3>
         <p>Story #124 deeply resonated with me because it emphasizes perseverance, believing in oneself, and embracing personal growth. Rather than comparing ourselves with others, the story encourages continuous learning and becoming a better version of ourselves every day.</p>
         <p>While reflecting on this story, I realized that every challenge contributes to my growth. As I begin my ProtoSem journey, I want to approach every task with curiosity, resilience, and confidence. This story reminded me that meaningful progress comes from consistency, learning from mistakes, and never giving up.</p>
-        <a href="https://www.zenpencils.com/comic/142-timothy-ferriss-someday/" class="btn btn-ghost btn-sm" style="margin-top:18px;">View Story</a>
+        <a href="#" class="btn btn-ghost btn-sm" style="margin-top:18px;">View Story</a>
       </div>
- 
+
       <div class="wd-card">
         <span class="wd-label">Key Learnings</span>
         <div class="wd-learn-grid">
@@ -865,20 +868,18 @@
           <div class="wd-learn-card"><span class="wd-icon">📚</span><h4>Continuous Learning</h4><p>Developing the habit of reflecting on experiences to become a better learner.</p></div>
         </div>
       </div>
- 
+
       <div class="wd-card">
         <span class="wd-label">Reflection</span>
         <h3>My Reflection</h3>
-        <p>Week 1 was an opportunity to discover myself before building solutions for others. The 16Personalities assessment helped me understand my natural strengths, while the Zen Pencils story inspired me to remain consistent, resilient, and open to learning. Together, these activities strengthened my confidence and prepared me for the challenges ahead in ProtoSem. I now have a clearer understanding of how I collaborate, solve problems, and continue growing throughout this journey.</p>
+        <p>Week 0 was an opportunity to discover myself before building solutions for others. The 16Personalities assessment helped me understand my natural strengths, while the Zen Pencils story inspired me to remain consistent, resilient, and open to learning. Together, these activities strengthened my confidence and prepared me for the challenges ahead in ProtoSem. I now have a clearer understanding of how I collaborate, solve problems, and continue growing throughout this journey.</p>
       </div>
     `,
     1: `
       <div class="wd-card">
         <span class="wd-label">Overview</span>
-        <div class="wd-media">
         <h3>Week 1 – Lab Fundamentals &amp; Electronics</h3>
         <p>The first week at Forge &amp; Ventures was focused on understanding the lab environment, learning fundamental engineering practices, and gaining hands-on experience with electronics.</p>
-
       </div>
 
       <div class="wd-card">
@@ -904,45 +905,106 @@
         <h3>My Reflection</h3>
         <p>Overall, the first week provided a strong foundation in workspace organization, electronics, embedded hardware, and practical engineering skills, preparing me for more advanced projects in the coming weeks.</p>
       </div>
+    `,
+    2: `
+      <div class="wd-card">
+        <span class="wd-label">Overview</span>
+        <h3>Week 2 – Programming Foundations &amp; Guest Insights</h3>
+        <p>Week 2 shifted the focus from self-reflection to building technical foundations. I explored different programming paradigms, worked through practical problems, and picked up algorithmic thinking through flowcharts. The week was rounded off with a guest lecture from Prof. Mukund Sud and two hands-on builds — a Scratch project and an MIT App Inventor app called Patient Care.</p>
+      </div>
+
+      <div class="wd-card">
+        <span class="wd-label">Programming Paradigms &amp; Problem Solving</span>
+        <h3>Thinking Like a Programmer</h3>
+        <p>This week introduced me to the different paradigms programmers use to approach a problem — from writing step-by-step procedural logic to structuring code around objects and behaviours. Rather than just learning syntax, I focused on when and why a particular paradigm fits a given problem.</p>
+        <p>Alongside the theory, I worked through a set of practical problems that pushed me to translate a real requirement into working logic — breaking a task down, spotting edge cases, and testing my assumptions instead of jumping straight to code.</p>
+      </div>
+
+      <div class="wd-card">
+        <span class="wd-label">Algorithms &amp; Flowcharts</span>
+        <div class="wd-media"><img src="#" alt="Flowchart from Week 2"></div>
+        <h3 style="font-size:17px;">Mapping Logic Before Code</h3>
+        <p>I learned to plan a solution as an algorithm before writing a single line of code, then represent that logic visually as a flowchart. Sketching out decisions, loops, and conditions on paper first made my actual code cleaner and easier to debug, since the structure was already thought through.</p>
+      </div>
+
+      <div class="wd-card">
+        <span class="wd-label">Guest Lecture</span>
+        <div class="wd-media"><img src="#" alt="Prof. Mukund Sud guest lecture"></div>
+        <h3 style="font-size:17px;">Session with Prof. Mukund Sud</h3>
+        <p>Prof. Mukund Sud visited and shared his perspective and experience with us. Beyond the technical points, what stayed with me most was the way he framed problem-solving and learning as an ongoing process — it gave me a broader outlook on how to approach the rest of ProtoSem, not just the topics covered that day.</p>
+      </div>
+
+      <div class="wd-card">
+        <span class="wd-label">Scratch Project</span>
+        <div class="wd-media"><img src="#" alt="Scratch project screenshot"></div>
+        <h3 style="font-size:17px;">Visual Programming with Scratch</h3>
+        <p>I built a project in Scratch to put the week's logic concepts into practice in a block-based, visual environment. It was a good reminder that the core ideas — sequencing, conditions, loops — stay the same whether you're dragging blocks or writing text-based code.</p>
+      </div>
+
+      <div class="wd-card">
+        <span class="wd-label">MIT App Inventor</span>
+        <div class="wd-media"><img src="#" alt="Patient Care app in MIT App Inventor"></div>
+        <h3 style="font-size:17px;">Patient Care App</h3>
+        <p>Using MIT App Inventor, I designed and built an app called Patient Care, applying the algorithmic and logical-flow thinking from earlier in the week to a real, functional app interface — my first hands-on experience turning a flowchart-style plan into a working mobile app.</p>
+      </div>
+
+      <div class="wd-card">
+        <span class="wd-label">Key Learnings</span>
+        <div class="wd-learn-grid">
+          <div class="wd-learn-card"><span class="wd-icon">🧠</span><h4>Programming Paradigms</h4><p>Understanding different approaches to structuring logic and code.</p></div>
+          <div class="wd-learn-card"><span class="wd-icon">🧩</span><h4>Problem Solving</h4><p>Breaking practical problems down into clear, solvable steps.</p></div>
+          <div class="wd-learn-card"><span class="wd-icon">📊</span><h4>Algorithms &amp; Flowcharts</h4><p>Planning logic visually before writing any code.</p></div>
+          <div class="wd-learn-card"><span class="wd-icon">🎓</span><h4>Guest Insights</h4><p>Learning from Prof. Mukund Sud's experience and outlook.</p></div>
+          <div class="wd-learn-card"><span class="wd-icon">🐱</span><h4>Scratch</h4><p>Applying core logic concepts in a visual, block-based tool.</p></div>
+          <div class="wd-learn-card"><span class="wd-icon">📱</span><h4>App Building</h4><p>Turning logical planning into a working app with Patient Care.</p></div>
+        </div>
+      </div>
+
+      <div class="wd-card">
+        <span class="wd-label">Reflection</span>
+        <h3>My Reflection</h3>
+        <p>Week 2 moved me from thinking about myself to thinking in code. Learning programming paradigms and practicing algorithms and flowcharts gave me a clearer process for approaching any problem, and Prof. Mukund Sud's lecture added perspective beyond the technical syllabus. Building the Scratch project and the Patient Care app in MIT App Inventor let me apply everything hands-on, and seeing an idea turn into something functional was genuinely exciting. This week gave me a stronger, more structured foundation to carry into the rest of ProtoSem.</p>
+      </div>
     `
   };
- 
+
+
   // Generate Week 0 - Week 20 roadmap cards with click-to-expand accordion
   const weekGrid = document.getElementById('weekGrid');
   if(weekGrid){
     for(let i = 0; i <= 20; i++){
       const hasContent = Object.prototype.hasOwnProperty.call(weekContent, i);
- 
+
       const card = document.createElement('div');
       card.className = 'week-card reveal' + (hasContent ? '' : ' no-content');
       card.innerHTML =
         '<span class="glow"></span>' +
         '<div class="week-left"><span class="week-dot"></span><span class="week-num">Week ' + i + '</span></div>' +
         '<div class="week-chevron"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 4.5L6 8L9.5 4.5" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>';
- 
+
       const detail = document.createElement('div');
       detail.className = 'week-detail';
       if(hasContent){
         detail.innerHTML = '<div class="week-detail-inner">' + weekContent[i] + '</div>';
       }
- 
+
       if(hasContent){
         card.addEventListener('click', () => {
           const isOpen = detail.classList.contains('open');
           // close any other open week
           document.querySelectorAll('.week-detail.open').forEach(d => { if(d !== detail){ d.classList.remove('open'); } });
           document.querySelectorAll('.week-card.expanded').forEach(c => { if(c !== card){ c.classList.remove('expanded'); } });
- 
+
           detail.classList.toggle('open', !isOpen);
           card.classList.toggle('expanded', !isOpen);
         });
       }
- 
+
       weekGrid.appendChild(card);
       weekGrid.appendChild(detail);
     }
   }
- 
+
   // Active nav link on scroll
   const sections = document.querySelectorAll('section[id]');
   const navLinks = document.querySelectorAll('.nav-link');
