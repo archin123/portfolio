@@ -770,6 +770,119 @@
     }
   }
 
+
+
+  /* Week 7 content consistency: retain the original font families and visual theme. */
+  .task-detail > .wd-card {
+    text-align: left;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 400;
+    line-height: 1.75;
+  }
+  .task-detail > .wd-card p,
+  .task-detail > .wd-card li,
+  .task-detail > .wd-card td {
+    font-family: 'Manrope', sans-serif;
+    font-size: 14.5px;
+    font-weight: 400;
+    line-height: 1.75;
+    text-align: left;
+  }
+  .task-detail > .wd-card p { margin: 0 0 12px; }
+  .task-detail > .wd-card p:last-child { margin-bottom: 0; }
+  .task-detail > .wd-card strong,
+  .task-detail > .wd-card b {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 700;
+  }
+  .task-detail > .wd-card h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    text-align: left;
+    line-height: 1.35;
+  }
+  .task-detail > .wd-card h4 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+  }
+  .task-detail > .wd-card ol,
+  .task-detail > .wd-card ul {
+    margin: 8px 0 18px;
+    padding-left: 24px;
+    text-align: left;
+  }
+  .task-detail > .wd-card ol li,
+  .task-detail > .wd-card ul li {
+    padding-left: 4px;
+    margin: 0 0 8px;
+  }
+  /* Keep numbered instruction cards clear of their number badges in every task. */
+  .task-detail > .wd-card ol {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0 18px;
+  }
+  .task-detail > .wd-card ol li {
+    position: relative;
+    box-sizing: border-box;
+    padding: 15px 18px 15px 64px;
+    margin: 0;
+    min-height: 58px;
+    overflow-wrap: anywhere;
+  }
+  .task-detail > .wd-card ol li::before {
+    left: 16px;
+    top: 15px;
+  }
+  .task-detail > .wd-card table {
+    width: 100%;
+    margin: 12px 0 20px;
+    table-layout: auto;
+    text-align: left;
+  }
+  .task-detail > .wd-card th {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    text-align: left;
+    vertical-align: top;
+  }
+  .task-detail > .wd-card td { vertical-align: top; }
+  .task-detail > .wd-card code {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 400;
+  }
+  .task-detail > .wd-card .system-flow { text-align: center; }
+  .task-detail > .wd-card .resource-links { align-items: center; }
+  .task-detail > .wd-card a[href*="github.com"] {
+    display: inline-flex;
+    align-items: center;
+    margin: 4px 0;
+    padding: 8px 14px;
+    border: 1px solid var(--clay-soft-2);
+    border-radius: 30px;
+    background: var(--clay-soft);
+    color: var(--clay-2);
+    font-family: 'Manrope', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.4;
+    text-decoration: none;
+  }
+  .task-detail > .wd-card a[href*="github.com"]:hover {
+    background: var(--clay);
+    color: #fff;
+  }
+  .task-detail > .wd-card .task-video { text-align: left; }
+  .task-detail > .wd-card .task-video h3 { text-align: left; }
+  @media (max-width: 720px) {
+    .task-detail > .wd-card p,
+    .task-detail > .wd-card li,
+    .task-detail > .wd-card td { font-size: 14px; }
+    .task-detail > .wd-card table { display: block; overflow-x: auto; }
+    .task-detail > .wd-card ol li { padding: 13px 13px 13px 54px; }
+    .task-detail > .wd-card ol li::before { left: 12px; top: 13px; }
+  }
+
 </style>
 </head>
 <body>
@@ -1484,6 +1597,27 @@
     Your browser does not support HTML video.
   </video>
 </div>&nbsp; | &nbsp; <strong>Repository:</strong> <a href="https://github.com/archin123/portfolio" target="_blank" rel="noopener">View Task 1 Repository</a>.</p>
+
+   <h3>Problem Statement &amp; Wiring Details</h3>
+   <p><strong>Problem being addressed:</strong> A user should be able to control the ESP32's built-in LED remotely from a browser without pressing a physical switch on the board. The ESP32 therefore acts as both the Wi-Fi client and the local HTTP server.</p>
+   <p><strong>Wiring diagram:</strong> This version uses the onboard LED, so there is no external LED circuit to wire. The USB cable supplies power and provides the programming connection. The LED is already connected to a board-specific GPIO through the development board circuitry.</p>
+   <table><thead><tr><th>Connection</th><th>Details</th><th>Verification</th></tr></thead><tbody>
+   <tr><td>Computer → ESP32</td><td>USB cable</td><td>Board appears under the selected COM/serial port.</td></tr>
+   <tr><td>Onboard LED</td><td>Board-integrated LED; GPIO depends on ESP32 board revision.</td><td>Check the board pinout/schematic and set the matching <code>LED_PIN</code> in the sketch.</td></tr>
+   <tr><td>External circuit</td><td>Not required for the onboard LED method.</td><td>No external LED/resistor/breadboard should be shown as part of this version.</td></tr>
+   </tbody></table>
+   <h3>Important Code Sections</h3>
+   <p><strong>Wi-Fi connection:</strong> The sketch uses <code>WiFi.begin()</code> with the network credentials and waits until the ESP32 joins the local network. <strong>HTTP routes:</strong> the root route serves the HTML controls, <code>/on</code> changes the LED output to HIGH/LOW according to the board's LED polarity, and <code>/off</code> sets the opposite state. <strong>Request processing:</strong> <code>server.handleClient()</code> must be called repeatedly in <code>loop()</code> so the ESP32 can respond to browser requests.</p>
+   <p><strong>Source-code evidence:</strong> Keep the complete, uploadable Arduino sketch in the Task 1 repository, including the verified board/LED pin, Wi-Fi connection code, HTML page, route handlers, and comments explaining the ON/OFF logic. The portfolio description is not a replacement for the source file.</p>
+   <h3>Problems Encountered &amp; Solutions</h3>
+   <table><thead><tr><th>Possible issue to document</th><th>Check / solution</th></tr></thead><tbody>
+   <tr><td>ESP32 does not connect to Wi-Fi</td><td>Check the SSID/password, use a supported 2.4 GHz network, and confirm the serial monitor reports a successful connection.</td></tr>
+   <tr><td>Webpage does not open</td><td>Read the current IP address from Serial Monitor and ensure the phone/computer and ESP32 are on the same local network.</td></tr>
+   <tr><td>LED does not respond</td><td>Verify the actual onboard LED GPIO and its active polarity for the exact ESP32 board; update the pin constant and test again.</td></tr>
+   <tr><td>Browser command is not handled</td><td>Confirm the <code>/on</code> and <code>/off</code> routes are registered and <code>server.handleClient()</code> runs continuously.</td></tr>
+   </tbody></table>
+   <p><strong>Report accuracy:</strong> Retain only the issues that were actually observed during your build, and add the exact fix you applied.</p>
+
 </div></div>
         </div>
 
@@ -1517,13 +1651,42 @@
    <figure class="wd-media"><img src="arc off.png" alt="Low-voltage ESP32 to relay control wiring with GPIO26 highlighted">
   <figure class="wd-media"><img src="archana on.jpeg" alt="Adafruit IO bulb feed and dashboard control">
   <p><strong>Video:<div class="task-video">
-  <h3>Task 1 Demonstration</h3>
+  <h3>Task 2 Demonstration</h3>
 
   <video controls preload="metadata" playsinline>
     <source src="taskj 2.mp4" type="video/mp4">
     Your browser does not support HTML video.
   </video>
 </div> &nbsp; | &nbsp; <strong>Repository:</strong> <a href="https://github.com/archin123/portfolio" target="_blank" rel="noopener">View Task 2 Repository</a>.</p>
+
+   <h3>MQTT Roles, Feed &amp; Topic Structure</h3>
+   <table><thead><tr><th>Element</th><th>Role in this task</th></tr></thead><tbody>
+   <tr><td>Publisher</td><td>The Adafruit IO dashboard/user action publishes the selected ON or OFF value to the bulb feed.</td></tr>
+   <tr><td>Broker</td><td>Adafruit IO's MQTT service receives the published feed update and distributes it to subscribed clients.</td></tr>
+   <tr><td>Subscriber</td><td>The ESP32 subscribes to the bulb feed and handles incoming values in its MQTT callback.</td></tr>
+   <tr><td>Feed</td><td>The Adafruit IO data channel used to hold the bulb command, named <code>bulb</code> in the existing task description.</td></tr>
+   </tbody></table>
+   <p><strong>Topic pattern:</strong> Adafruit IO MQTT topics generally follow <code>{username}/feeds/{feed-key}</code>. For this task, the expected pattern is <code>{your-username}/feeds/bulb</code>. Replace <code>{your-username}</code> with the account's actual Adafruit IO username and confirm the exact feed key in the account before publishing it in the final report.</p>
+   <h3>Adafruit IO Account &amp; Dashboard Configuration</h3>
+   <ol>
+     <li>Sign in to Adafruit IO and note the account username. Keep the AIO key private; never place it in a public screenshot or public source file.</li>
+     <li>Create a feed with the key <code>bulb</code> (or record the exact key already used by the project).</li>
+     <li>Create a dashboard and add a toggle/button block connected to that feed.</li>
+     <li>Configure the ESP32 with the Wi-Fi details, Adafruit IO username, private key, and matching feed key.</li>
+     <li>Subscribe to the feed and verify that the MQTT callback receives both ON and OFF values.</li>
+   </ol>
+   <h3>Important Code Sections</h3>
+   <p><strong>Authentication:</strong> the client uses the Adafruit IO username and AIO key to connect. <strong>Feed subscription:</strong> the ESP32 subscribes to the bulb feed after connecting. <strong>Message callback:</strong> the callback interprets the received value and sets the relay output. <strong>Connection servicing:</strong> <code>io.run()</code> is called repeatedly so the MQTT connection and incoming messages continue to be processed.</p>
+   <h3>Problems Encountered &amp; Solutions</h3>
+   <table><thead><tr><th>Possible issue to document</th><th>Check / solution</th></tr></thead><tbody>
+   <tr><td>ESP32 cannot authenticate</td><td>Recheck the account username and private AIO key; keep the key out of public repositories.</td></tr>
+   <tr><td>Dashboard changes but relay does not</td><td>Confirm the feed key/topic, subscription status, callback value handling, and relay active-LOW/active-HIGH behavior.</td></tr>
+   <tr><td>Cloud connection drops</td><td>Check Wi-Fi stability, reconnect handling, and that <code>io.run()</code> is serviced regularly.</td></tr>
+   <tr><td>Bulb state is opposite to the dashboard</td><td>Verify the relay module's active state and correct the output logic; test with a safe low-voltage load first.</td></tr>
+   </tbody></table>
+   <p><strong>Evidence to add if not already shown:</strong> an Adafruit IO feed page with its feed key, dashboard block settings, and a view of the feed value changing for both ON and OFF commands.</p>
+   <p><strong>Report accuracy:</strong> These are setup and troubleshooting checks. In the final report, identify which ones actually occurred and the exact resolution used.</p>
+
 </div></div>
         </div>
 
@@ -1564,6 +1727,35 @@
     Your browser does not support HTML video.
   </video>
 </div> &nbsp; | &nbsp; <strong>Repository:</strong> <a href="https://github.com/archin123/portfolio" target="_blank" rel="noopener">View Task 3 Repository</a>.</p>
+
+   <h3>Role of Adafruit IO in the Automation</h3>
+   <p>For an IFTTT + Adafruit IO workflow, IFTTT detects the voice phrase and updates an Adafruit IO feed. Adafruit IO then exposes that feed through its MQTT broker, and the ESP32 subscribes to the feed to receive the command. In this arrangement, Adafruit IO is the cloud message/feed layer between the automation trigger and the device.</p>
+   <section class="system-flow" aria-label="Expected IFTTT and Adafruit IO automation flow"><div class="flow-heading"><span class="flow-kicker">ASSIGNMENT WORKFLOW</span><h3>IFTTT + Adafruit IO data flow</h3><p>Expected route when Adafruit IO is used as part of the automation.</p></div><div class="flow-stack">
+   <div class="flow-node"><strong>Voice Assistant</strong><span>Phrase such as bulb ON / OFF</span></div><div class="flow-arrow"><b>↓</b></div>
+   <div class="flow-node"><strong>IFTTT Applet</strong><span>Trigger matches the phrase</span></div><div class="flow-arrow"><b>↓</b></div>
+   <div class="flow-node"><strong>Adafruit IO Feed</strong><span>IFTTT action updates the bulb feed</span></div><div class="flow-arrow"><b>↓</b></div>
+   <div class="flow-node"><strong>Adafruit IO MQTT Broker</strong><span>Distributes the feed update</span></div><div class="flow-arrow"><b>↓</b></div>
+   <div class="flow-node"><strong>ESP32 Subscriber</strong><span>Receives ON / OFF value</span></div><div class="flow-arrow"><b>↓</b></div>
+   <div class="flow-node"><strong>Relay &amp; Bulb</strong><span>Physical output changes state</span></div></div></section>
+   <p><strong>Important implementation distinction:</strong> The existing workflow documented above sends the IFTTT HTTP Web Request directly to the ESP32 <code>/on</code> or <code>/off</code> route. That demonstrates voice-triggered HTTP control, but it does not show Adafruit IO as an active part of the command path. To satisfy the full IFTTT + Adafruit IO checklist, the IFTTT action must update the Adafruit IO bulb feed and the ESP32 must receive that feed update through MQTT. Do not describe the direct HTTP path as an Adafruit IO integration unless that feed/MQTT path is actually implemented and tested.</p>
+   <h3>Trigger, Action &amp; Validation</h3>
+   <table><thead><tr><th>Stage</th><th>What should be recorded</th></tr></thead><tbody>
+   <tr><td>Trigger</td><td>The exact voice phrase and voice-assistant service selected in IFTTT.</td></tr>
+   <tr><td>Action</td><td>The IFTTT action that writes the ON/OFF value to the Adafruit IO bulb feed.</td></tr>
+   <tr><td>Cloud update</td><td>The feed value and timestamp/activity confirming that IFTTT updated Adafruit IO.</td></tr>
+   <tr><td>Device response</td><td>The ESP32 MQTT subscription/callback receives the value and changes the relay output.</td></tr>
+   </tbody></table>
+   <h3>Testing Under Different Conditions</h3>
+   <ol>
+     <li>Test the ON voice phrase and confirm the IFTTT applet runs, the feed changes to ON, and the device output responds.</li>
+     <li>Test the OFF voice phrase and confirm the feed changes to OFF and the output switches off.</li>
+     <li>Repeat with the dashboard toggle to confirm that the ESP32 receives feed updates from Adafruit IO independently of the voice trigger.</li>
+     <li>Test a temporary Wi-Fi interruption and record whether the ESP32 reconnects and resumes receiving feed updates.</li>
+     <li>Check the IFTTT activity log, Adafruit IO feed history, and physical output together so the complete path is evidenced.</li>
+   </ol>
+   <h3>Problems &amp; Solutions to Record</h3>
+   <p>Common checks include an IFTTT trigger phrase that does not match, an action configured for the wrong feed, a mismatched feed key/topic, MQTT authentication failure, an ESP32 that is offline, or relay polarity that reverses the expected output. Record the actual issue observed, its cause, and the fix applied during the build.</p>
+
 </div></div>
         </div>
 
@@ -1600,6 +1792,42 @@
   <figure class="wd-media"><img src="task 4 second.jpeg" alt="ESP32 DHT11 LDR and relay low-voltage wiring"></figure>
   <figure class="wd-media"><img src="task 4 three.jpeg" alt="ESP32 DHT11 LDR and relay low-voltage wiring"></figure>
    &nbsp; | &nbsp; <strong>Repository:</strong> <a href="https://github.com/archin123/portfolio" target="_blank" rel="noopener">View Task 4 Repository</a>.</p>
+
+   <h3>Cloud Computing Concepts</h3>
+   <p><strong>Cloud computing:</strong> using computing resources such as storage, databases, authentication, and application services over a network instead of keeping every service on one local computer.</p>
+   <table><thead><tr><th>Model</th><th>Meaning</th><th>General example</th></tr></thead><tbody>
+   <tr><td>IaaS</td><td>Infrastructure as a Service — rented virtual computing, storage, and networking infrastructure.</td><td>Virtual machines and cloud networks.</td></tr>
+   <tr><td>PaaS</td><td>Platform as a Service — a managed platform for deploying and running applications.</td><td>Managed application hosting/runtime platforms.</td></tr>
+   <tr><td>SaaS</td><td>Software as a Service — a complete application accessed over the internet.</td><td>Web-based email or office software.</td></tr>
+   <tr><td>BaaS</td><td>Backend as a Service — ready-made backend capabilities such as authentication, database, and storage APIs.</td><td>Firebase services used by a web/mobile application.</td></tr>
+   </tbody></table>
+   <h3>Cloud Platform, Database &amp; Dashboard</h3>
+   <p>A <strong>cloud platform</strong> provides hosted services that applications and connected devices can use over the internet. A <strong>database</strong> stores organised information so it can be created, read, updated, and retrieved. <strong>Firebase Realtime Database</strong> is a cloud-hosted NoSQL database that stores data as a JSON tree and synchronises updates with connected clients in real time. A <strong>cloud-based dashboard</strong> is a web interface that reads cloud data and presents it as values, status indicators, charts, and controls.</p>
+   <h3>Authentication &amp; Authorization</h3>
+   <p><strong>Authentication</strong> verifies who a user is, for example by checking the email/password sign-in configured in Firebase Authentication. <strong>Authorization</strong> decides what an authenticated user is allowed to read or change, typically enforced through database security rules and application permissions.</p>
+   <table><thead><tr><th>Authentication</th><th>Authorization</th></tr></thead><tbody>
+   <tr><td>Answers: “Who are you?”</td><td>Answers: “What are you allowed to access?”</td></tr>
+   <tr><td>Verifies identity or sign-in credentials.</td><td>Checks permissions for a database path or action.</td></tr>
+   <tr><td>Example: a user signs in with email and password.</td><td>Example: only an authenticated/authorised user can change bulb control values.</td></tr>
+   </tbody></table>
+   <h3>Firebase Setup &amp; Security Checks</h3>
+   <ol>
+     <li>Create or open the Firebase project used by the dashboard and register the web application.</li>
+     <li>Enable the sign-in provider actually used by the project in Firebase Authentication.</li>
+     <li>Create the Realtime Database in the intended region and confirm the database URL used by the web app and ESP32.</li>
+     <li>Set database rules to match the intended authenticated access. Do not leave production data publicly writable.</li>
+     <li>Confirm the dashboard reads the expected sensor paths and writes only the required control paths.</li>
+     <li>Test a signed-out session and an authorised signed-in session to confirm that access restrictions behave as intended.</li>
+   </ol>
+   <h3>Problems Encountered &amp; Solutions</h3>
+   <table><thead><tr><th>Possible issue to document</th><th>Check / solution</th></tr></thead><tbody>
+   <tr><td>Login fails</td><td>Confirm the provider is enabled, credentials are valid, and the app uses the correct Firebase project configuration.</td></tr>
+   <tr><td>Dashboard shows no sensor values</td><td>Check the database URL, path names, listener setup, and whether the ESP32 is uploading to the same project.</td></tr>
+   <tr><td>Permission denied</td><td>Review Firebase Authentication state and Realtime Database security rules; grant only the access the signed-in user needs.</td></tr>
+   <tr><td>Dashboard and device show different states</td><td>Check the exact JSON paths, data types, update timing, and command acknowledgement/refresh logic.</td></tr>
+   </tbody></table>
+   <p><strong>Evidence to add if not already shown:</strong> Firebase project overview, enabled sign-in provider, Realtime Database rules (with sensitive details hidden), and a successful login plus denied unauthorised-access test.</p>
+
 </div>
   </div>
 
@@ -1633,13 +1861,64 @@
   <h3>Steps to Recreate</h3><ol><li>Assemble the low-voltage sensor/control circuit with power disconnected. Use GPIO4 for DHT11 data, GPIO34 for the LDR divider output, and GPIO26 for relay IN only if these suit your board and code.</li><li>In Firebase Realtime Database, create the matching <code>/sensors</code> and <code>/control</code> nodes. Configure authenticated access and ensure the dashboard and ESP32 use the same project and paths.</li><li>Upload the ESP32 sketch with Wi-Fi/Firebase configuration, sensor pin constants, relay pin, sensor upload routine, and database command reader. Keep credentials out of the public repository.</li><li>On the dashboard, implement MANUAL and AUTO mode selection. In MANUAL, write the requested bulb state to <code>/control/bulb</code>. In AUTO, apply the documented threshold: LDR &gt; 3800 means bulb ON; LDR ≤ 3800 means bulb OFF.</li><li>Calibrate/test LDR readings under bright and dim conditions; confirm the threshold direction matches the sensor divider arrangement. Verify DHT11 readings and update intervals.</li><li>Test manual ON/OFF, AUTO mode, switching between modes, Wi-Fi loss/recovery, Firebase updates, and relay polarity. Confirm the displayed bulb state reflects the actual output.</li><li>For the final demonstration, show sensor values, database updates, mode changes, relay response, and the CSV/export result if implemented in the project.</li></ol>
   <figure class="wd-media"><img src="task 5.png" alt="Integrated ESP32 DHT11 LDR relay circuit"></figure>
   <p><div class="task-video">
-  <h3>Task 1 Demonstration</h3>
+  <h3>Task 5 Demonstration</h3>
 
   <video controls preload="metadata" playsinline>
     <source src="firenase mukes.mp4" type="video/mp4">
     Your browser does not support HTML video.
   </video>
 </div> &nbsp; | &nbsp; <strong>Repository:</strong> <a href="https://github.com/archin123/portfolio" target="_blank" rel="noopener">View Task 5 Repository</a>.</p>
+
+   <h3>Historical Logging &amp; Timestamp Structure</h3>
+   <p>For historical records, each sample should be stored as a separate log entry rather than repeatedly overwriting a single current-value field. A log entry should include a timestamp and the sensor/control values captured at that time. Use the actual field names from the Firebase database when documenting the final structure.</p>
+   <table><thead><tr><th>Example field</th><th>Purpose</th></tr></thead><tbody>
+   <tr><td><code>timestamp</code></td><td>Date/time when the sample was recorded.</td></tr>
+   <tr><td><code>temperature</code></td><td>DHT11 temperature reading.</td></tr>
+   <tr><td><code>humidity</code></td><td>DHT11 relative humidity reading.</td></tr>
+   <tr><td><code>ldr</code></td><td>Raw or converted LDR/light-level reading; state which one is stored.</td></tr>
+   <tr><td><code>bulb</code></td><td>Recorded bulb state (ON/OFF).</td></tr>
+   <tr><td><code>mode</code></td><td>Operating mode at the time of the record (MANUAL/AUTO).</td></tr>
+   </tbody></table>
+   <p><strong>Timestamp note:</strong> State whether timestamps are stored as Unix milliseconds, ISO 8601 text, or a formatted local-time string. Use one consistent format and identify the timezone so exported records can be interpreted correctly.</p>
+   <h3>LDR Threshold Calibration</h3>
+   <p>The existing task logic uses <code>3800</code> as the LDR threshold: readings greater than 3800 request bulb ON, while readings at or below 3800 request bulb OFF. This threshold is specific to the sensor divider, ADC configuration, board, and lighting arrangement; it is not a universal LDR value.</p>
+   <ol>
+     <li>Record several raw ADC readings with the sensor exposed to the bright conditions expected in the demonstration.</li>
+     <li>Record several readings under the dim/dark conditions expected in the demonstration.</li>
+     <li>Compare the ranges and choose a threshold between the observed bright and dim readings, confirming the direction of the divider response.</li>
+     <li>Test around the threshold and check whether the bulb switches repeatedly due to small fluctuations. If needed, use a small hysteresis band or averaging, then document the actual implemented logic.</li>
+     <li>Retest MANUAL mode to confirm that automatic logic does not override a manual command when MANUAL mode is selected.</li>
+   </ol>
+   <p><strong>Calibration evidence:</strong> Add a small table of your measured bright and dim readings and state whether 3800 was retained or changed. Do not present example readings as measured results.</p>
+   <h3>CSV Export &amp; Download Verification</h3>
+   <p>The CSV export should contain the same historical records shown in the dashboard. Verify that the downloaded file opens in Excel or another spreadsheet application, that the first row contains clear column headings, that timestamps are readable, and that the number of exported rows matches the selected records.</p>
+   <p><strong>Evidence still required:</strong> Add a screenshot of the downloaded CSV opened in Excel, showing the timestamp, temperature, humidity, LDR/light value, bulb state, and operating mode columns. The dashboard's download button alone does not prove that the exported file contains the expected data.</p>
+   <h3>Limitations of the Current Prototype</h3>
+   <ul>
+     <li>Sensor readings depend on sensor accuracy, placement, calibration, and the stability of the power supply.</li>
+     <li>The LDR threshold may need recalibration when the sensor, voltage divider, board, or surrounding lighting changes.</li>
+     <li>Wi-Fi or Firebase connectivity loss can interrupt live updates and remote control until the connection is restored.</li>
+     <li>A relay-controlled mains bulb requires a correctly rated, enclosed, isolated switching arrangement and safe installation.</li>
+     <li>Historical data quality depends on consistent timestamps, sampling intervals, and successful database writes.</li>
+   </ul>
+   <h3>Possible Future Improvements</h3>
+   <ul>
+     <li>Add sensor averaging and configurable threshold/hysteresis to reduce unwanted switching.</li>
+     <li>Add offline buffering and automatic synchronisation after Wi-Fi recovery.</li>
+     <li>Add date-range filters and selectable time ranges for historical charts and CSV exports.</li>
+     <li>Add alerts for unusual temperature/humidity values, low connectivity, or repeated relay switching.</li>
+     <li>Improve access control and audit logging for dashboard commands.</li>
+   </ul>
+   <h3>Problems Encountered &amp; Solutions</h3>
+   <table><thead><tr><th>Possible issue to document</th><th>Check / solution</th></tr></thead><tbody>
+   <tr><td>Historical entries are missing</td><td>Check the write path, timestamp generation, database permissions, and network status; confirm each sample write succeeds.</td></tr>
+   <tr><td>Chart values look incorrect</td><td>Check whether the chart reads the correct numeric fields and converts timestamps consistently.</td></tr>
+   <tr><td>CSV is empty or malformed</td><td>Check the export query, field mapping, CSV header row, escaping of commas/quotes, and selected date range.</td></tr>
+   <tr><td>Bulb switches at the wrong light level</td><td>Recheck the LDR divider direction and calibrate the threshold using recorded bright/dim readings.</td></tr>
+   <tr><td>Manual command is overridden</td><td>Ensure AUTO logic runs only in AUTO mode and that MANUAL mode respects the dashboard command.</td></tr>
+   </tbody></table>
+   <p><strong>Report accuracy:</strong> Keep only the limitations and problems that apply to the prototype. Distinguish implemented improvements from suggestions for future work.</p>
+
 </div></div>
         </div>
       </div>
