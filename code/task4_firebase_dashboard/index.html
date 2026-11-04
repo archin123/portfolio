@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Home Automation - Firebase IoT Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Chart.js CDN for real-time visualization -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Firebase SDKs (v8 compat for reliable standalone browser execution) -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+</head>
+<body>
+
+  <!-- ================= AUTH CONTAINER ================= -->
+  <div id="authContainer" class="auth-wrapper">
+    <div class="auth-card">
+      <div class="auth-icon">🏠</div>
+      <h2>Smart Home</h2>
+      <p class="auth-subtitle">Home Automation System</p>
+      
+      <form id="authForm" onsubmit="return false;">
+        <div class="input-group">
+          <input type="email" id="authEmail" placeholder="Enter your email" required autocomplete="email">
+        </div>
+        <div class="input-group">
+          <input type="password" id="authPassword" placeholder="Enter your password" required autocomplete="current-password">
+        </div>
+        <button type="button" id="btnLogin" class="btn btn-login">Login</button>
+        <button type="button" id="btnSignUp" class="btn btn-signup">Create Account</button>
+      </form>
+      <div id="authError" class="auth-error" style="display:none;"></div>
+    </div>
+  </div>
+
+  <!-- ================= MAIN DASHBOARD CONTAINER ================= -->
+  <div id="dashboardContainer" class="dashboard-wrapper" style="display:none;">
+    
+    <!-- Top Navigation Bar -->
+    <header class="dashboard-header">
+      <div class="brand">
+        <span class="brand-icon">🏠</span>
+        <span class="brand-text">Smart Home Automation</span>
+      </div>
+      <button id="btnLogout" class="btn-logout">Logout</button>
+    </header>
+
+    <main class="dashboard-content">
+      <!-- User Greeting -->
+      <section class="welcome-section">
+        <h1>Dashboard 👋</h1>
+        <p class="user-greeting">Logged in as: <span id="userEmailDisplay">arch@gmail.com</span></p>
+      </section>
+
+      <!-- Section 1: Environmental & Light Monitoring -->
+      <section class="dash-section">
+        <div class="section-heading">
+          <span class="section-icon">🍇</span>
+          <h2>Environmental &amp; Light Monitoring</h2>
+        </div>
+        <div class="card-grid">
+          <!-- Temperature Card -->
+          <div class="sensor-card">
+            <div class="card-title"><span class="icon">🌡️</span> Temperature</div>
+            <div class="card-value"><span id="valTemp">22.6</span> <span class="unit">°C</span></div>
+            <div class="card-footer">DHT11 sensor</div>
+          </div>
+          <!-- Humidity Card -->
+          <div class="sensor-card">
+            <div class="card-title"><span class="icon">💧</span> Humidity</div>
+            <div class="card-value"><span id="valHumidity">50</span> <span class="unit">%</span></div>
+            <div class="card-footer">DHT11 sensor</div>
+          </div>
+          <!-- Ambient Light Card -->
+          <div class="sensor-card">
+            <div class="card-title"><span class="icon">☀️</span> Ambient Light</div>
+            <div class="card-value"><span id="valLdr">1</span></div>
+            <div class="card-footer" id="ldrCondition">DARK detected</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2: Appliance Control & Automation -->
+      <section class="dash-section">
+        <div class="section-heading">
+          <span class="section-icon">⚙️</span>
+          <h2>Appliance Control &amp; Automation</h2>
+        </div>
+        <div class="card-grid">
+          <!-- Bulb Control Card -->
+          <div class="control-card">
+            <div class="card-title"><span class="icon">💡</span> Bulb Control</div>
+            <button id="btnBulbToggle" class="btn-bulb btn-bulb-on">💡 Bulb ON</button>
+            <div class="control-status">Bulb State: <strong id="lblBulbState">ON</strong></div>
+            <div class="control-meta">Last changed by: <span id="lblLastChanged">arch@gmail.com</span></div>
+          </div>
+
+          <!-- Operating Mode Card -->
+          <div class="control-card">
+            <div class="card-title"><span class="icon">🔄</span> Operating Mode</div>
+            <div class="mode-toggle-group">
+              <button id="btnModeManual" class="btn-mode active-manual">Manual</button>
+              <button id="btnModeAuto" class="btn-mode">Automatic</button>
+            </div>
+            <div class="control-status">Current Mode: <strong id="lblCurrentMode">manual</strong></div>
+            <p class="mode-desc">
+              <strong>Manual:</strong> Website controls bulb.<br>
+              <strong>Automatic:</strong> HIGH = Dark = ON, LOW = Light = OFF
+            </p>
+          </div>
+
+          <!-- LDR Information Card -->
+          <div class="control-card">
+            <div class="card-title"><span class="icon">☀️</span> LDR Information</div>
+            <div class="ldr-meta"><strong>LDR Value:</strong> <span id="lblLdrRaw">1</span></div>
+            <div class="ldr-meta"><strong>Light Condition:</strong> <span id="lblLdrState">DARK</span></div>
+            <p class="ldr-desc">The LDR module's potentiometer controls the light/dark threshold.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Sensor Graph -->
+      <section class="dash-section">
+        <div class="section-heading">
+          <span class="section-icon">📊</span>
+          <h2>Temperature / Humidity / LDR Graph</h2>
+        </div>
+        <div class="chart-container">
+          <canvas id="sensorChart"></canvas>
+        </div>
+      </section>
+
+      <!-- Section 4: Historical Data & CSV Download -->
+      <section class="dash-section">
+        <div class="section-heading">
+          <span class="section-icon">📋</span>
+          <h2>Historical Data</h2>
+        </div>
+        <div class="table-container">
+          <table class="history-table" id="historyTable">
+            <thead>
+              <tr>
+                <th>Timestamp</th>
+                <th>Temperature</th>
+                <th>Humidity</th>
+                <th>LDR</th>
+                <th>Bulb</th>
+                <th>Mode</th>
+                <th>Source</th>
+              </tr>
+            </thead>
+            <tbody id="historyTableBody">
+              <!-- Dynamically populated rows -->
+            </tbody>
+          </table>
+        </div>
+        <div class="download-bar">
+          <button id="btnDownloadCSV" class="btn-download">📥 Download Historical Data as CSV</button>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
+
