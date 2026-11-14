@@ -16,7 +16,7 @@ Every task has been upgraded to 100% compliance with the practical evaluation ch
 
 | Task | Title | Key Technologies | Evaluation Target | Dedicated Page | Source Code |
 | :--- | :--- | :--- | :---: | :---: | :---: |
-| **Task 1** | **ESP32 Web Server & HTML LED Control** | ESP32, HTTP/1.1, WebServer, HTML5/CSS3 | **100%** (15/15) | [Task 1 Page](https://archin123.github.io/portfolio/week7-task1.html) | [`code/task1...`](./code/task1_esp32_web_server/) |
+| **Task 1** | **ESP32 Web Server & HTML LED Control** | ESP32, HTTP/1.1, WebServer, HTML5/CSS3 | **100%** (15/15) | [Task 1 Page](https://archin123.github.io/portfolio/week7-task1.html) | [`code/task1...`](./code/task1_esp32_web_server/) &bull; [Standalone Repo](https://github.com/archin123/ESP32-Web-Server-LED-Control) |
 | **Task 2** | **Adafruit IO Dashboard & MQTT** | Adafruit IO, MQTT Protocol, 5V Relay, 230V Bulb | **100%** (19/19) | [Task 2 Page](https://archin123.github.io/portfolio/week7-task2.html) | [`code/task2...`](./code/task2_adafruit_mqtt/) |
 | **Task 3** | **IFTTT + Adafruit IO IoT Automation** | Google Assistant, IFTTT Webhooks, MQTT | **100%** (20/20) | [Task 3 Page](https://archin123.github.io/portfolio/week7-task3.html) | [`code/task3...`](./code/task3_ifttt_automation/) |
 | **Task 4** | **Firebase IoT Monitoring Dashboard** | Firebase Realtime DB, Auth, Chart.js | **100%** (20/20) | [Task 4 Page](https://archin123.github.io/portfolio/week7-task4.html) | [`code/task4...`](./code/task4_firebase_dashboard/) |
@@ -34,6 +34,12 @@ portfolio/
 ├── week7-task3.html                     # Task 3 comprehensive evaluation documentation
 ├── week7-task4.html                     # Task 4 comprehensive evaluation documentation
 ├── week7-task5.html                     # Task 5 comprehensive evaluation documentation
+│
+├── ESP32-Web-Server-LED-Control/        # Dedicated Task 1 GitHub Repository (mirror of friend repo structure)
+│   ├── README.md                        # Complete project documentation with diagrams & badges
+│   ├── src/esp32_webserver_led.ino      # C++ source code for Wi-Fi Web Server
+│   ├── screenshots/                     # Hardware & web interface verification captures
+│   └── media/task1-video.mp4            # Physical LED control demonstration video
 │
 ├── code/                                # All project firmware and software files
 │   ├── task1_esp32_web_server/
